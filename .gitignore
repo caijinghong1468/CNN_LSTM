@@ -173,5 +173,10 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
+<<<<<<< HEAD
 
+=======
+*.csv
+*.bib
+>>>>>>> master
 .DS_Store
