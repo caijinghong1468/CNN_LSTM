@@ -9,9 +9,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 def main():
     # 檢查是否有可用的 GPU，若有則使用 GPU，否則使用 CPU
-    device = torch.device("cuda" if torch.cuda.is_available() else "mps")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("使用裝置：", device)  # 輸出當前使用的裝置
-
+    print(type(state_dict))
     # 初始化模型並將其移動到計算裝置上
     model = EmotionCNNLSTM(num_classes=7).to(device)
 
@@ -20,7 +20,7 @@ def main():
     optimizer = optim.Adam(model.parameters(), lr=0.001)  # Adam 優化器，學習率設定為 0.001
 
     # 設定訓練的輪數 (epochs)
-    num_epochs = 20
+    num_epochs = 50
 
     # 開始進行訓練迴圈
     for epoch in range(num_epochs):

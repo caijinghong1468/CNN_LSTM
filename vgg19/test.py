@@ -9,16 +9,13 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-
-
-
-
-
 def main():
     # 準備使用與訓練時相同的模型結構，並載入訓練後保存的權重
     device = torch.device("cuda" if torch.cuda.is_available() else "mps")
     model = EmotionCNNLSTM(num_classes=7).to(device)
-    model.load_state_dict(torch.load("emotion_model.pth", map_location=device))
+    model.load_state_dict(torch.load("./emotion_model.pth", map_location=device))
+    model = torch.nn.DataParallel(model)  # 啟用多 GPU
+    model.to(device)
     model.eval()  # 將模型設定為評估模式 (停用訓練中才有的隨機因素，如 dropout)
 
     # 在測試資料集上執行推理 (Inference)
@@ -58,7 +55,7 @@ def main():
     # 計算混淆矩陣
     cm = confusion_matrix(y_true, y_pred)
     # 定義類別名稱
-    class_names = ['Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'Class 6', 'Class 7']
+    class_names = ['angry', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprise']
     # 繪製混淆矩陣圖表
     plt.figure(figsize=(8, 6))
     # 使用 Seaborn 繪製帶有色彩強度表示的熱力圖，顯示混淆矩陣
@@ -67,7 +64,9 @@ def main():
     plt.xlabel('Predicted Label')   # x軸標籤：模型預測的類別
     plt.ylabel('True Label')        # y軸標籤：真實類別
     plt.tight_layout()
-    plt.show()
+    # **將圖表存成圖片**
+    plt.savefig("confusion_matrix.png")  # 儲存為 PNG 圖檔
+    plt.close()  # 關閉圖表，釋放記憶體
 
 
 if __name__ == "__main__":

@@ -32,8 +32,8 @@ test_transform = transforms.Compose([
 # root: 資料存放的目錄，假設資料已下載並置於 ./data/fer2013
 # split: 指定資料集劃分，"train" 為訓練集，"test" 為測試集
 # transform: 指定上面定義的圖像轉換
-train_dataset = datasets.FER2013(root='./data', split='train', transform=train_transform)
-test_dataset  = datasets.FER2013(root='./data', split='test',  transform=test_transform)
+train_dataset = datasets.FER2013(root='vgg19/data', split='train', transform=train_transform)
+test_dataset  = datasets.FER2013(root='vgg19/data', split='test',  transform=test_transform)
 
 # 建立資料加載器 DataLoader
 # - batch_size: 每個批次處理的樣本數
