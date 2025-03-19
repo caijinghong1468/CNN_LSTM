@@ -11,4 +11,4 @@ COPY . /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 指定 Python 可執行檔
-CMD ["python", "vgg19/main.py"]
+CMD ["sh", "-c", "python vgg19/main.py && python vgg19/test.py"]

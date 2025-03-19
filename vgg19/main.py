@@ -11,16 +11,17 @@ def main():
     # 檢查是否有可用的 GPU，若有則使用 GPU，否則使用 CPU
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("使用裝置：", device)  # 輸出當前使用的裝置
-    print(type(state_dict))
+    
     # 初始化模型並將其移動到計算裝置上
     model = EmotionCNNLSTM(num_classes=7).to(device)
-
+    model = torch.nn.DataParallel(model)  # 啟用多 GPU
+    model.to(device)
     # 定義損失函數和優化器
     criterion = nn.CrossEntropyLoss()             # 交叉熵損失函數，用於多分類問題的標準損失
     optimizer = optim.Adam(model.parameters(), lr=0.001)  # Adam 優化器，學習率設定為 0.001
 
     # 設定訓練的輪數 (epochs)
-    num_epochs = 50
+    num_epochs = 150
 
     # 開始進行訓練迴圈
     for epoch in range(num_epochs):
@@ -60,3 +61,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+

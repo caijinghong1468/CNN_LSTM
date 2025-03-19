@@ -11,9 +11,9 @@ import seaborn as sns
 
 def main():
     # 準備使用與訓練時相同的模型結構，並載入訓練後保存的權重
-    device = torch.device("cuda" if torch.cuda.is_available() else "mps")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = EmotionCNNLSTM(num_classes=7).to(device)
-    model.load_state_dict(torch.load("./emotion_model.pth", map_location=device))
+    model.load_state_dict(torch.load("/app/vgg19/emotion_model.pth", map_location=device))
     model = torch.nn.DataParallel(model)  # 啟用多 GPU
     model.to(device)
     model.eval()  # 將模型設定為評估模式 (停用訓練中才有的隨機因素，如 dropout)

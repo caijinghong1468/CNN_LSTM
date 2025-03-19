@@ -39,8 +39,8 @@ test_dataset  = datasets.FER2013(root='vgg19/data', split='test',  transform=tes
 # - batch_size: 每個批次處理的樣本數
 # - shuffle: 訓練集隨機打亂順序，測試集不打亂
 # - num_workers: 資料載入時使用的工作執行緒數量 (根據硬體情況調整，這裡設為2)
-train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True,  num_workers=2)
-test_loader  = DataLoader(test_dataset,  batch_size=64, shuffle=False, num_workers=2)
+train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True,  num_workers=8)
+test_loader  = DataLoader(test_dataset,  batch_size=64, shuffle=False, num_workers=8)
 
 # 定義情緒類別名稱 (對應 FER2013 中的7種表情)
 class_names = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutral']
